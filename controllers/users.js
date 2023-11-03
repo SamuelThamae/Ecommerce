@@ -1,8 +1,9 @@
 const express=require('express')
 const users=require('../models/usersModel')
+const jwt=require('jsonwebtoken')
 
 
-const index=async (req,res)=>{
+const register=async (req,res)=>{
    try{  
     const email=req.body.email
  const userExist=await users.findOne({email:email})
@@ -19,6 +20,41 @@ const index=async (req,res)=>{
    
 }
 
+const login=async (req,res)=>{
+   try{
+      const {email,password}=req.body
+      const userExist=await users.findOne({email:email})
+      if(!userExist){
+         return res.status(404).json({message:'Invalid creditials'})
+      }else{
+         const checkPass= await userExist.comparePassword(password)
+
+         
+         if(checkPass)
+         {
+            const user={
+               mobile:userExist.mobile,
+               email:userExist.email,
+               FirstName:userExist.FirstName,
+               LastName:userExist.LastName
+            }
+
+            const token=jwt.sign(user,process.env.JWTtoken,{expiresIn:"24h"})
+            
+            return res.status(200).json({token})
+         }else{
+            return res.status(403).json({message:'Invalid creditials'})
+         }
+         
+
+      }
+   }catch(error){
+      console.error('Ther is an error in the login',error)
+      return res.status(500).json({message:'internal error in the server'})
+   }
+}
+
 module.exports={
-    index:index
+    register:register,
+    login:login
 }
