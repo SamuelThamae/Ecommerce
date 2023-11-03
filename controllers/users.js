@@ -54,7 +54,18 @@ const login=async (req,res)=>{
    }
 }
 
+const allUsers= async (req,res) =>{
+   try{
+      const allUsers=await users.find()
+      return res.status(200).json({allUsers}) 
+   }catch(error){
+      console.error("There is an error in getting all users",error)
+      return res.status(500).json({message:"Internal error in the server"})
+   }
+}
+
 module.exports={
     register:register,
-    login:login
+    login:login,
+    index:allUsers
 }
