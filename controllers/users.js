@@ -99,10 +99,22 @@ const getUserById=async (req,res)=>{
    }
 }
 
+const deleteUserById=async (req,res)=>{
+   const {id}=req.params
+   try{
+      const recordDeleted=await users.findByIdAndDelete(id)
+      return res.status(200).json({message:"User deleted successfully"})
+   }catch(error){
+      console.error(`There is an error in deleting user`,error)
+      return res.status(500).json({message:"internal error in the server"})
+   }
+}
+
 module.exports={
     register:register,
     login:login,
     index:allUsers,
     update:updateUser,
-    getUser:getUserById
+    getUser:getUserById,
+    deleteUser:deleteUserById
 }
