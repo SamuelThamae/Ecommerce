@@ -64,8 +64,29 @@ const allUsers= async (req,res) =>{
    }
 }
 
+const updateUser=async(req,res)=>{
+  const {id}=req.params
+  try{
+      const updateRecord=await users.findByIdAndUpdate(id,
+         {
+            FirstName: req?.body?.FirstName,
+            LastName:req?.body?.LastName,
+            mobile:req?.body?.mobile,
+            email:req?.body?.email
+         },{
+            new:true
+         })
+         return res.status(200).json({message:"record was successfully updated"})
+   }catch(error)
+   {
+      console.error("There is a error in updating user",error)
+      return res.status(500).json({message:'Internal error in the server'})
+   }
+}
+
 module.exports={
     register:register,
     login:login,
-    index:allUsers
+    index:allUsers,
+    update:updateUser
 }
