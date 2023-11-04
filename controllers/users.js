@@ -115,5 +115,6 @@ module.exports={
     login:login,
     index:allUsers,
     update:updateUser,
-    getUser:getUserById
+    getUser:getUserById,
+    deleteUser:deleteUserById
 }
