@@ -79,8 +79,23 @@ const updateUser=async(req,res)=>{
          return res.status(200).json({message:"record was successfully updated"})
    }catch(error)
    {
-      console.error("There is a error in updating user",error)
+      console.error("There is a error in updating user\n",error)
       return res.status(500).json({message:'Internal error in the server'})
+   }
+}
+
+const getUserById=async (req,res)=>{
+   const {id}=req.params
+   try{
+      const userRecord=await users.findById(id)
+      if(userRecord){
+         return res.status(200).json({userRecord})
+      }else{
+         return res.status(404).json({message:`No user found with this id ${id}`})
+      }
+   }catch(error){
+      console.error("There is an error in getting one user",error)
+      return res.status(500).json({message:"Internal error in the server"})
    }
 }
 
@@ -88,5 +103,6 @@ module.exports={
     register:register,
     login:login,
     index:allUsers,
-    update:updateUser
+    update:updateUser,
+    getUser:getUserById
 }
