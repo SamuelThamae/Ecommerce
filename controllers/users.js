@@ -38,9 +38,9 @@ const login=async (req,res)=>{
                FirstName:userExist.FirstName,
                LastName:userExist.LastName,
                role:userExist.role,
-               status:userExit.status
+               status:userExist.status
             }
-
+console.log(user)
             const token=jwt.sign(user,process.env.JWTtoken,{expiresIn:"24h"})
             
             return res.status(200).json({token})
@@ -117,7 +117,7 @@ const unblockUserById=async(req,res)=>{
    try{
       const updateRecord=await users.findByIdAndUpdate(id,
          {
-            isActive:true
+            status:true
          },{
             new:true
          })
@@ -133,7 +133,7 @@ const blockUserById=async(req,res)=>{
    try{
       const updateRecord=await users.findByIdAndUpdate(id,
          {
-            isActive:false
+            status:false
          },{
             new:true
          })

@@ -24,6 +24,18 @@ const tokenSend=async (req,res,next)=>{
         next()
     }
 }
+
+const checkRole=async (req,res,next)=>{
+    const {email}=res.userActive    
+    const record=await user.findOne({email})
+        if(record.role=="admin")
+        {
+           next() 
+        }else{
+            return res.status(403).json({message:"Action not granted "})
+        }
+}
 module.exports={
-    tokenSend
+    tokenSend,
+    checkRole
 }
