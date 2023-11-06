@@ -28,6 +28,10 @@ var userSchema = new mongoose.Schema({
     role:{
         type:String,
         default:'user',
+    },
+    isActive:{
+        type:Boolean,
+        default:true,
     }
 });
 
