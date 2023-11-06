@@ -29,7 +29,7 @@ var userSchema = new mongoose.Schema({
         type:String,
         default:'user',
     },
-    isActive:{
+   status:{
         type:Boolean,
         default:true,
     }
