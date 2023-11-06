@@ -36,7 +36,9 @@ const login=async (req,res)=>{
                mobile:userExist.mobile,
                email:userExist.email,
                FirstName:userExist.FirstName,
-               LastName:userExist.LastName
+               LastName:userExist.LastName,
+               role:userExist.role,
+               status:userExit.status
             }
 
             const token=jwt.sign(user,process.env.JWTtoken,{expiresIn:"24h"})
@@ -72,7 +74,7 @@ const updateUser=async(req,res)=>{
             FirstName: req?.body?.FirstName,
             LastName:req?.body?.LastName,
             mobile:req?.body?.mobile,
-            email:req?.body?.email
+            email:req?.body?.email,
          },{
             new:true
          })
@@ -109,6 +111,39 @@ const deleteUserById=async (req,res)=>{
       return res.status(500).json({message:"internal error in the server"})
    }
 }
+const unblockUserById=async(req,res)=>{
+   const {id}=req.params
+   
+   try{
+      const updateRecord=await users.findByIdAndUpdate(id,
+         {
+            isActive:true
+         },{
+            new:true
+         })
+         return res.status(200).json({message:'User is unblocked'})
+   }catch(error){
+      console.error(`There is an error in unblocking the user`,error)
+      return res.status(500).json({message:'Internal server error, please try again later'})
+   }
+}
+const blockUserById=async(req,res)=>{
+   const {id}=req.params
+  
+   try{
+      const updateRecord=await users.findByIdAndUpdate(id,
+         {
+            isActive:false
+         },{
+            new:true
+         })
+
+         return res.status(200).json({message:'User is blocked successfully'})
+   }catch(error){
+      console.error(`There is an error in blocking the user`,error)
+      return res.status(500).json({message:'Internal server error, please try again later'})
+   }
+}
 
 module.exports={
     register:register,
@@ -116,5 +151,7 @@ module.exports={
     index:allUsers,
     update:updateUser,
     getUser:getUserById,
-    deleteUser:deleteUserById
+    deleteUser:deleteUserById,
+    blocked:blockUserById,
+    unblock:unblockUserById
 }
