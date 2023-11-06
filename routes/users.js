@@ -11,4 +11,5 @@ router.get('/',auth.tokenSend,auth.checkRole,usersController.index)
 .post('/login',usersController.login)
 .put('/unblock/:id',auth.tokenSend,auth.checkRole,usersController.unblock)
 .put('/block/:id',auth.tokenSend,auth.checkRole,usersController.blocked)
+.put('/updateRole/:id',auth.tokenSend,auth.checkRole,usersController.updateRole)
 module.exports=router

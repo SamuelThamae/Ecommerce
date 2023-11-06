@@ -40,7 +40,7 @@ const login=async (req,res)=>{
                role:userExist.role,
                status:userExist.status
             }
-console.log(user)
+
             const token=jwt.sign(user,process.env.JWTtoken,{expiresIn:"24h"})
             
             return res.status(200).json({token})
@@ -145,6 +145,22 @@ const blockUserById=async(req,res)=>{
    }
 }
 
+const updateRoleById=async (req,res)=>{
+   const {id}=req.params
+   try{
+      const record=await users.findByIdAndUpdate(id,{
+         role:req?.body?.role
+      },
+      {
+         new:true
+      })
+      return res.status(200).json({message:"Role updated successfully"})
+   }catch(error){
+      console.log("There is an error in updating the user role",error)
+      return res.status(500).json({message:"Internal server error, please try again later"})
+   }
+}
+
 module.exports={
     register:register,
     login:login,
@@ -153,5 +169,6 @@ module.exports={
     getUser:getUserById,
     deleteUser:deleteUserById,
     blocked:blockUserById,
-    unblock:unblockUserById
+    unblock:unblockUserById,
+    updateRole:updateRoleById
 }
