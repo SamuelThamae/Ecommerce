@@ -36,7 +36,9 @@ const login=async (req,res)=>{
                mobile:userExist.mobile,
                email:userExist.email,
                FirstName:userExist.FirstName,
-               LastName:userExist.LastName
+               LastName:userExist.LastName,
+               role:userExist.role,
+               status:userExit.status
             }
 
             const token=jwt.sign(user,process.env.JWTtoken,{expiresIn:"24h"})
@@ -72,7 +74,7 @@ const updateUser=async(req,res)=>{
             FirstName: req?.body?.FirstName,
             LastName:req?.body?.LastName,
             mobile:req?.body?.mobile,
-            email:req?.body?.email
+            email:req?.body?.email,
          },{
             new:true
          })
