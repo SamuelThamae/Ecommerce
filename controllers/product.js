@@ -1,5 +1,6 @@
 const express=require('express')
 const product=require('../models/productModel')
+const slugify=require('slugify')
 
 const getAllProducts=async (req,res)=>{
     try{
@@ -15,8 +16,11 @@ const getAllProducts=async (req,res)=>{
 const addProduct=async (req,res)=>{ 
     const data=req.body 
     try{
-        
-        console.log(data)
+        if(req.body.title)
+        {
+            req.body.slug=slugify(req.body.title)
+        }
+
         const record=await product.create(data)
         return res.status(200).json({message:"Product created successfully",record})
 
@@ -26,8 +30,26 @@ const addProduct=async (req,res)=>{
     }
 }
 
+const updateProduct=async (req,res)=>{
+    const {id}=req.params
+    try{
+        if(req.body.title)
+        {
+            req.body.slug=slugify(req.body.title)
+        }
+        const record=await product.findByIdAndUpdate(id,{
+            title:req.body
 
+        },{
+        new:true
+    })
+    }catch(error){
+        console.error("There is an error in updating product\n",error)
+        return res.status(5000).json({message:"Internal server error"})
+    }
+}
 module.exports={
     index:getAllProducts,
-    addProduct:addProduct
+    addProduct:addProduct,
+    update:updateProduct
 }

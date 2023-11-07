@@ -5,6 +5,7 @@ const auth=require('../Services/CheckToken')
 
 router.get('/',product.index)
 .post('/',auth.tokenSend,auth.checkRole,product.addProduct)
+.put('/',auth.tokenSend,auth.checkRole,product.update)
 
 
 module.exports=router
