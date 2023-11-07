@@ -18,8 +18,10 @@ dbconnect();
 
 
 const usersRouter=require('./routes/users')
+const productRouter=require('./routes/product')
 
 app.use('/api/users/',usersRouter)
+app.use('/api/products/',productRouter)
 
 
 app.listen(PORT,()=>{

@@ -17,7 +17,8 @@
     "iconv-lite": "^0.6.3",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.2.0",
-    "mongoose": "^8.0.0"
+    "mongoose": "^8.0.0",
+    "slugify": "^1.6.6"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"

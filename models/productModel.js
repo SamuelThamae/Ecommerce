@@ -1,5 +1,5 @@
 const mongoose=require('mongoose')
-const mongoose = require('mongoose'); // Erase if already required
+const User =require('./usersModel')
 
 // Declare the Schema of the Mongo model
 var productSchema = new mongoose.Schema({
@@ -20,8 +20,8 @@ var productSchema = new mongoose.Schema({
     },
     rating:{
         star:Number,
-        postedby:{type:mongoose.Schema.Types.ObjectId},
-        ref:"User"
+        postedby:{type:mongoose.Schema.Types.ObjectId,
+        ref:"User"}
     },
     price:{
         type:Number,
@@ -31,21 +31,20 @@ var productSchema = new mongoose.Schema({
     category:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Category",
-        required:true,
+        
     },
     color:{
         type:Array,
-        default:["red","yellow","green"],
+        default:["red","yellow","green","black","white","blue","gold"],
     },
     availabilty:{
         type:Boolean,
         default:true,
     },
-    dateCreated:{
-        timestamps:true,
-    }
-
-});
+   
+},
+    { timestamps: { createdAt: 'created_at' } }
+);
 
 //Export the model
 module.exports = mongoose.model('Product', productSchema);
