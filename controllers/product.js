@@ -48,8 +48,20 @@ const updateProduct=async (req,res)=>{
         return res.status(5000).json({message:"Internal server error"})
     }
 }
+
+const getProductById=async (req,res)=>{
+    const {id}=req.params
+    try{
+        const record=await product.findById(id)
+        return res.status(200).json({record})
+    }catch(error){
+        console.error("There is an error in getting the record",error)
+        return res.status(500).json({message:"Internal server error"})
+    }
+}
 module.exports={
     index:getAllProducts,
     addProduct:addProduct,
-    update:updateProduct
+    update:updateProduct,
+    getOne:getProductById
 }
