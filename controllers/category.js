@@ -32,8 +32,20 @@ const getCategoryById=async (req,res)=>{
     }
 }
 
+const updateCategoryById=async (req,res)=>{
+    const {id}=req.params
+    try{
+        const catRecord=await Category.findByIdAndUpdate(id,req.body,{new:true})
+        return res.status(200).json({message:"Category updated successfully",catRecord})
+    }catch(error){
+        console.error("There is a error in updating the category with that id",error)
+        return res.status(500).json({message:"Internal server error, please try again later"})
+    }
+}
+
 module.exports={
     create:createCategory,
     getAll:getAllCategories,
-    getOne:getCategoryById
+    getOne:getCategoryById,
+    update:updateCategoryById
 }
