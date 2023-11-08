@@ -20,10 +20,12 @@ dbconnect();
 const usersRouter=require('./routes/users')
 const productRouter=require('./routes/product')
 const categoryRouter=require('./routes/category')
+const brand=require('./routes/brand')
 
 app.use('/api/users/',usersRouter)
 app.use('/api/products/',productRouter)
 app.use('/api/category/',categoryRouter)
+app.use('/api/brand/',brand)
 
 
 app.listen(PORT,()=>{
