@@ -3,8 +3,9 @@ const product=require('../models/productModel')
 const slugify=require('slugify')
 
 const getAllProducts=async (req,res)=>{
+    
     try{
-        const allProducts=await product.find()
+        const allProducts=await product.find(req.query)
         return res.status(200).json({allProducts})
 
     }catch(error){
