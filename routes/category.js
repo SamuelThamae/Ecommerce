@@ -7,5 +7,6 @@ router.post('/',auth.tokenSend,auth.checkRole,category.create)
 .get('/',category.getAll)
 .get('/:id',auth.tokenSend,auth.checkRole,category.getOne)
 .put('/:id',auth.tokenSend,auth.checkRole,category.update)
+.delete('/:id',auth.tokenSend,auth.checkRole,category.deleteOne)
 
 module.exports=router
