@@ -21,7 +21,19 @@ const getAllCategories=async (req,res)=>{
     }
 }
 
+const getCategoryById=async (req,res)=>{
+    const {id}=req.params
+    try{
+        const catRecord=await Category.findById(id)
+        return res.status(200).json({catRecord})
+    }catch(error){
+        console.error("There is an error in getting catergory by that id",error)
+        return res.status(500).json({message:"Internal server error,please try again later"})
+    }
+}
+
 module.exports={
     create:createCategory,
-    getAll:getAllCategories
+    getAll:getAllCategories,
+    getOne:getCategoryById
 }
