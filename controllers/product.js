@@ -70,10 +70,40 @@ const deteleProductById=async (req,res)=>{
         return res.status(500).json({message:"Internal server error"})
     }
 }
+
+const productImages=async (req,res)=>{
+    const {id}=req.params
+    console.log(req.files)
+    try{
+        const urls=[];
+        const files=req.files
+        
+        for(const file of files)
+        {
+            urls.push(file.path)
+        }
+
+        const oneRecord=await product.findByIdAndUpdate(id,
+          {
+            images:urls.map((file)=>{
+                return file
+            }),
+          },{new:true}
+            )
+
+    return res.status(200).json({oneRecord})
+    }catch(error)
+    {
+        console.error("There is an error in uploading this picture",error)
+        return res.status(500).json({message:"Internal server error"})
+    }
+
+}
 module.exports={
     index:getAllProducts,
     addProduct:addProduct,
     update:updateProduct,
     getOne:getProductById,
-    deleteOne:deteleProductById
+    deleteOne:deteleProductById,
+    upload:productImages
 }
