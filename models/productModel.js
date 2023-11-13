@@ -16,7 +16,7 @@ var productSchema = new mongoose.Schema({
     },
     brand:{
         type:String,
-        enum:["Samsung","Blackberry","Nokia","Iphone"],
+        requred:true
     },
     rating:{
         star:Number,
@@ -28,6 +28,10 @@ var productSchema = new mongoose.Schema({
         required:true,
        
     },
+    images:{
+        type:Array,
+        default:[]
+    },
     category:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Category",
@@ -35,7 +39,7 @@ var productSchema = new mongoose.Schema({
     },
     color:{
         type:Array,
-        default:["red","yellow","green","black","white","blue","gold"],
+        default:[],
     },
     availabilty:{
         type:Boolean,
